@@ -11,9 +11,9 @@ variable "instance_type" {
 }
 
 variable "main_name" {
-  description = "The name of the cluster"
+  description = "The name to identify this infrastructure"
   type        = string
-  default     = "my-cluster"
+  default     = "my-infrastructure"
   
 }
 
