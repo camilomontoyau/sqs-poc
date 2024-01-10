@@ -1,0 +1,6 @@
+aws_account_id: ""
+api_image_version: ""
+sqs_arn: ""
+api_name: ""
+domain: ""
+tld: ""
