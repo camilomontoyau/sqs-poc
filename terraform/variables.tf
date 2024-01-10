@@ -25,3 +25,8 @@ variable "tags" {
     "ManagedBy"   = "Terraform"
   }
 }
+
+variable "hostedZoneID" {
+  description = "The ID of the Route53 hosted zone"
+  type        = string
+}
