@@ -40,3 +40,9 @@ variable "tld" {
   description = "The top level domain"
   type        = string
 }
+
+variable "Environment" {
+  description = "The environment"
+  type        = string
+  default     = "dev"
+}
