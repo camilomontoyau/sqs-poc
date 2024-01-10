@@ -30,3 +30,13 @@ variable "hostedZoneID" {
   description = "The ID of the Route53 hosted zone"
   type        = string
 }
+
+variable "domain" {
+  description = "The domain name"
+  type        = string
+}
+
+variable "tld" {
+  description = "The top level domain"
+  type        = string
+}

@@ -31,7 +31,7 @@ module "eks" {
   }
 
   eks_managed_node_groups = {
-    himed-infra = {
+    my_node_group = {
       name = var.main_name
       labels = {
         "infra" = "true"
