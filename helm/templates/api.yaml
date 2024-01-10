@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: api
-          image: "{{aws_account_id}}.dkr.ecr.us-east-1.amazonaws.com/{{api_name}}:{{api_image_version}}"
+          image: {{aws_account_id}}.dkr.ecr.{{region}}.amazonaws.com/{{api_name}}:{{api_image_version}}
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 80          
