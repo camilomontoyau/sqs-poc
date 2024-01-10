@@ -21,6 +21,8 @@ spec:
           env:
             - name: SQS_ARN
               value: {{sqs_arn}}
+            - name: AWS_SQS_REGION
+              value: {{region}}
 ---
 apiVersion: v1
 kind: Service

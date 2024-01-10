@@ -2,7 +2,7 @@ import { SQSClient, SendMessageCommand, ReceiveMessageCommand } from "@aws-sdk/c
 import { config } from './config'
 
 
-const sqs = new SQSClient({ region: "REGION" })
+const sqs = new SQSClient({ region: config.AWS_SQS_REGION })
 
 export async function sendMessageToSQS(
   message: string
