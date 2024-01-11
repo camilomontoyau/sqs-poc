@@ -60,3 +60,4 @@ Thumbs.db
 **/errored.tfstate
 terraform/.terraform.lock.hcl
 terraform/.terraform.tfstate.lock.info
+terraform/dev.tfvars
