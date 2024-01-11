@@ -30,7 +30,6 @@ module "eks" {
       "arn:aws:iam::aws:policy/sqs/SQSReceiveMessage",
       "arn:aws:iam::aws:policy/sqs/SQSSendMessageBatch",
       "arn:aws:iam::aws:policy/sqs/SQSGetQueueAttributes"
-
     ]
     availability_zone = var.region
   }
