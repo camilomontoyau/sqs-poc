@@ -9,7 +9,7 @@ export async function sendMessageToSQS(
 ): Promise<void> {
   const params = {
     MessageBody: message,
-    QueueUrl: config.SQS_ARN
+    QueueUrl: config.SQS_URL
   }
 
   const command = new SendMessageCommand(params)
@@ -25,7 +25,7 @@ export async function sendMessageToSQS(
 
 export async function readMessagesFromSQS(): Promise<string[]> {
   const params = {
-    QueueUrl: config.SQS_ARN,
+    QueueUrl: config.SQS_URL,
     MaxNumberOfMessages: config.SQS_MESSAGE_NUMBER as number,
     WaitTimeSeconds: config.SQS_WAIT_TIME as number
   }
@@ -44,7 +44,7 @@ export async function readMessagesFromSQS(): Promise<string[]> {
 
 export async function getAvailableMessagesCount(): Promise<number> {
   const params = {
-    QueueUrl: config.SQS_ARN,
+    QueueUrl: config.SQS_URL,
     AttributeNames: ['ApproximateNumberOfMessages' as const]
   }
 
