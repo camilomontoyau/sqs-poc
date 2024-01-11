@@ -59,3 +59,4 @@ Thumbs.db
 **/terraform.tfstate.backup
 **/errored.tfstate
 terraform/.terraform.lock.hcl
+terraform/.terraform.tfstate.lock.info
