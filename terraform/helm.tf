@@ -98,36 +98,32 @@ resource "helm_release" "external_dns" {
 ### Cluster Issuer
 resource "helm_release" "cluster_issuer" {
   name = "letsencrypt"
-  repository = "https://charts.helm.sh/stable"
-  chart      = "cert-manager"
+
+  chart      = "../cluster-issuer"
+
   namespace  = "default"
   version    = "0.1.0"
 
   set {
-    name  = "clusterIssuer.metadata.name"
-    value = "letsencrypt-${var.Environment}"
+    name  = "environment"
+    value = var.Environment
   }
-
+  
   set {
-    name  = "clusterIssuer.spec.acme.privateKeySecretRef.name"
-    value = "letsencrypt-${var.Environment}"
-  }
-
-  set {
-    name  = "clusterIssuer.spec.acme.solvers[0].dns01.route53.hostedZoneID"
+    name  = "hostedZoneID"
     value = var.hostedZoneID
   }
 
   set {
-    name  = "clusterIssuer.spec.acme.solvers[0].dns01.route53.region"
-    value = var.region
-  }
-
-  set {
-    name  = "clusterIssuer.spec.acme.solvers[0].selector.dnsZones[0]"
+    name  = "dns_domain"
     value = "${var.domain}.${var.tld}"
   }
   
+  set {
+    name  = "region"
+    value = var.region
+  }
+
   depends_on = [ module.eks, helm_release.cert_manager, helm_release.external_dns ]
 }
 
