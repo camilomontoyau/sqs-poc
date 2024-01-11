@@ -83,16 +83,16 @@ resource "helm_release" "external_dns" {
 
 
 ### NGINX Ingress Controller
-# resource "helm_release" "nginx" {
-#   name       = "nginx-ingress"
-#   repository = "https://helm.nginx.com/stable"
-#   chart      = "nginx-ingress"
+resource "helm_release" "nginx" {
+  name       = "nginx-ingress"
+  repository = "https://helm.nginx.com/stable"
+  chart      = "nginx-ingress"
 
-#   create_namespace = true
-#   namespace        = "nginx-ingress"
+  create_namespace = true
+  namespace        = "nginx-ingress"
 
-#   depends_on = [ module.eks ]
-# }
+  depends_on = [ module.eks ]
+}
 
 
 ### Cluster Issuer
