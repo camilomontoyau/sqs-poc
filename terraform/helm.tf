@@ -127,57 +127,57 @@ resource "helm_release" "cluster_issuer" {
   depends_on = [ module.eks, helm_release.cert_manager, helm_release.external_dns ]
 }
 
-# data "aws_caller_identity" "current" {}
+data "aws_caller_identity" "current" {}
 
 
-### API Gateway
-# resource "helm_release" "api" {
-#   name = "api"
+### API
+resource "helm_release" "api" {
+  name = "api"
 
-#   chart      = "../helm"
+  chart      = "../helm"
 
-#   namespace  = "default"
-#   version    = "1.4.4"
+  namespace  = "default"
+  version    = "1.4.4"
 
-#   set {
-#     name  = "replicaCount"
-#     value = 1
-#   }
+  set {
+    name  = "replicaCount"
+    value = 1
+  }
 
-#   set {
-#     name = "aws_account_id"
-#     value = data.aws_caller_identity.current.account_id
-#   }
+  set {
+    name = "aws_account_id"
+    value = data.aws_caller_identity.current.account_id
+  }
 
-#   set {
-#     name = "api_image_version"
-#     value = var.api_image_version
-#   }
+  set {
+    name = "api_image_version"
+    value = var.api_image_version
+  }
 
-#   set {
-#     name = "sqs_arn"
-#     value = aws_sqs_queue.my_queue.arn
-#   }
+  set {
+    name = "sqs_arn"
+    value = aws_sqs_queue.my_queue.arn
+  }
 
-#   set {
-#     name = "api_name"
-#     value = var.api_name
-#   }
+  set {
+    name = "api_name"
+    value = var.api_name
+  }
 
-#   set {
-#     name = "domain"
-#     value = var.domain
-#   }
+  set {
+    name = "domain"
+    value = var.domain
+  }
 
-#   set {
-#     name = "tld"
-#     value = var.tld
-#   }
+  set {
+    name = "tld"
+    value = var.tld
+  }
 
-#   set {
-#     name = "region"
-#     value = var.region
-#   }
+  set {
+    name = "region"
+    value = var.region
+  }
 
-#   depends_on = [ module.eks, helm_release.cert_manager, helm_release.external_dns, helm_release.cluster_issuer ]
-# }
+  depends_on = [ module.eks, helm_release.cert_manager, helm_release.external_dns, helm_release.cluster_issuer ]
+}
