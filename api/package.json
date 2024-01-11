@@ -5,7 +5,8 @@
   "main": "src/app.ts",
   "scripts": {
     "start": "npm i && ts-node src/app.ts",
-    "build": "tsc"
+    "build": "tsc",
+    "process-messages": "ts-node src/process-messages.ts"
   },
   "dependencies": {
     "express": "^4.17.1"  
