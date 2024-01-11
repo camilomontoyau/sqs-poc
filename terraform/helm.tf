@@ -83,105 +83,105 @@ resource "helm_release" "external_dns" {
 
 
 ### NGINX Ingress Controller
-resource "helm_release" "nginx" {
-  name       = "nginx-ingress"
-  repository = "https://helm.nginx.com/stable"
-  chart      = "nginx-ingress"
+# resource "helm_release" "nginx" {
+#   name       = "nginx-ingress"
+#   repository = "https://helm.nginx.com/stable"
+#   chart      = "nginx-ingress"
 
-  create_namespace = true
-  namespace        = "nginx-ingress"
+#   create_namespace = true
+#   namespace        = "nginx-ingress"
 
-  depends_on = [ module.eks ]
-}
+#   depends_on = [ module.eks ]
+# }
 
 
 ### Cluster Issuer
-resource "helm_release" "cluster_issuer" {
-  name = "letsencrypt"
-  repository = "https://charts.helm.sh/stable"
-  chart      = "cert-manager"
-  namespace  = "default"
-  version    = "0.1.0"
+# resource "helm_release" "cluster_issuer" {
+#   name = "letsencrypt"
+#   repository = "https://charts.helm.sh/stable"
+#   chart      = "cert-manager"
+#   namespace  = "default"
+#   version    = "0.1.0"
 
-  set {
-    name  = "clusterIssuer.metadata.name"
-    value = "letsencrypt-${var.Environment}"
-  }
+#   set {
+#     name  = "clusterIssuer.metadata.name"
+#     value = "letsencrypt-${var.Environment}"
+#   }
 
-  set {
-    name  = "clusterIssuer.spec.acme.privateKeySecretRef.name"
-    value = "letsencrypt-${var.Environment}"
-  }
+#   set {
+#     name  = "clusterIssuer.spec.acme.privateKeySecretRef.name"
+#     value = "letsencrypt-${var.Environment}"
+#   }
 
-  set {
-    name  = "clusterIssuer.spec.acme.solvers[0].dns01.route53.hostedZoneID"
-    value = var.hostedZoneID
-  }
+#   set {
+#     name  = "clusterIssuer.spec.acme.solvers[0].dns01.route53.hostedZoneID"
+#     value = var.hostedZoneID
+#   }
 
-  set {
-    name  = "clusterIssuer.spec.acme.solvers[0].dns01.route53.region"
-    value = var.region
-  }
+#   set {
+#     name  = "clusterIssuer.spec.acme.solvers[0].dns01.route53.region"
+#     value = var.region
+#   }
 
-  set {
-    name  = "clusterIssuer.spec.acme.solvers[0].selector.dnsZones[0]"
-    value = "${var.domain}.${var.tld}"
-  }
+#   set {
+#     name  = "clusterIssuer.spec.acme.solvers[0].selector.dnsZones[0]"
+#     value = "${var.domain}.${var.tld}"
+#   }
   
-  depends_on = [ module.eks, helm_release.cert_manager, helm_release.external_dns, helm_release.nginx ]
-}
+#   depends_on = [ module.eks, helm_release.cert_manager, helm_release.external_dns, helm_release.nginx ]
+# }
 
-data "aws_caller_identity" "current" {}
+# data "aws_caller_identity" "current" {}
 
 
 ### API Gateway
-resource "helm_release" "api" {
-  name = "api"
+# resource "helm_release" "api" {
+#   name = "api"
 
-  chart      = "../helm"
+#   chart      = "../helm"
 
-  namespace  = "default"
-  version    = "1.4.4"
+#   namespace  = "default"
+#   version    = "1.4.4"
 
-  set {
-    name  = "replicaCount"
-    value = 1
-  }
+#   set {
+#     name  = "replicaCount"
+#     value = 1
+#   }
 
-  set {
-    name = "aws_account_id"
-    value = data.aws_caller_identity.current.account_id
-  }
+#   set {
+#     name = "aws_account_id"
+#     value = data.aws_caller_identity.current.account_id
+#   }
 
-  set {
-    name = "api_image_version"
-    value = var.api_image_version
-  }
+#   set {
+#     name = "api_image_version"
+#     value = var.api_image_version
+#   }
 
-  set {
-    name = "sqs_arn"
-    value = aws_sqs_queue.my_queue.arn
-  }
+#   set {
+#     name = "sqs_arn"
+#     value = aws_sqs_queue.my_queue.arn
+#   }
 
-  set {
-    name = "api_name"
-    value = var.api_name
-  }
+#   set {
+#     name = "api_name"
+#     value = var.api_name
+#   }
 
-  set {
-    name = "domain"
-    value = var.domain
-  }
+#   set {
+#     name = "domain"
+#     value = var.domain
+#   }
 
-  set {
-    name = "tld"
-    value = var.tld
-  }
+#   set {
+#     name = "tld"
+#     value = var.tld
+#   }
 
-  set {
-    name = "region"
-    value = var.region
-  }
+#   set {
+#     name = "region"
+#     value = var.region
+#   }
 
-  depends_on = [ module.eks, helm_release.cert_manager, helm_release.external_dns, helm_release.nginx, helm_release.cluster_issuer ]
-}
+#   depends_on = [ module.eks, helm_release.cert_manager, helm_release.external_dns, helm_release.nginx, helm_release.cluster_issuer ]
+# }
