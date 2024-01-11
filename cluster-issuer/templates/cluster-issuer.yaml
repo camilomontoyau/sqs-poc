@@ -15,7 +15,7 @@ spec:
           region: {{ .Values.region }}
       selector:
         dnsZones:
-        - {{ .Values.dns_domain }}  #"himedweb.com"
+        - {{ .Values.dns_domain }}
     - http01:
         ingress:
           class: nginx
