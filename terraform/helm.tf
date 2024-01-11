@@ -179,5 +179,5 @@ resource "helm_release" "api" {
     value = var.region
   }
 
-  depends_on = [ module.eks, helm_release.cert_manager, helm_release.external_dns, helm_release.nginx, helm_release.cluster_issuer ]
+  depends_on = [ module.eks, helm_release.cert_manager, helm_release.external_dns, helm_release.cluster_issuer ]
 }
