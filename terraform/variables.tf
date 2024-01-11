@@ -46,3 +46,14 @@ variable "Environment" {
   type        = string
   default     = "dev"
 }
+
+variable "api_image_version" {
+  description = "The version of the API image"
+  type        = string
+}
+
+variable "api_name" {
+  description = "The name of the API"
+  type        = string
+  default     = "api"
+}
