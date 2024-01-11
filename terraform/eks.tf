@@ -25,8 +25,7 @@ module "eks" {
     iam_role_additional_policies = [
       "arn:aws:iam::aws:policy/AmazonS3ReadOnlyAccess",
       "arn:aws:iam::aws:policy/SecretsManagerReadWrite",
-      "arn:aws:iam::aws:policy/service-role/AmazonEBSCSIDriverPolicy",
-      "${aws_iam_policy.custom_sqs_policy.arn}"
+      "arn:aws:iam::aws:policy/service-role/AmazonEBSCSIDriverPolicy"
     ]
     availability_zone = var.region
   }

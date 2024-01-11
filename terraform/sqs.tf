@@ -8,7 +8,7 @@ resource "aws_sqs_queue" "my_queue" {
 }
 
 resource "aws_iam_policy" "custom_sqs_policy" {
-  name        = "my_custom_sqs_policy"
+  name        = "sqs"
   description = "A custom SQS policy"
   policy      = <<EOF
 {
