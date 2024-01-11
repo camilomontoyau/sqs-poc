@@ -45,7 +45,7 @@ export async function readMessagesFromSQS(): Promise<string[]> {
 export async function getAvailableMessagesCount(): Promise<number> {
   const params = {
     QueueUrl: config.SQS_ARN,
-    AttributeNames: ['ApproximateNumberOfMessages']
+    AttributeNames: ['ApproximateNumberOfMessages' as const]
   }
 
   try {
