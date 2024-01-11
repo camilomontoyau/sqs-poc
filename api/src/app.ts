@@ -1,5 +1,5 @@
 import express from 'express';
-import { sendMessageToSQS } from './sqs-service';
+import { getAvailableMessagesCount, sendMessageToSQS } from './sqs-service';
 
 
 const app = express();
@@ -16,6 +16,11 @@ app.post('/message', async (req: express.Request, res: express.Response) => {
 });
 
 app.get('/health', (req, res) => res.status(200).send('OK'))
+
+app.get('/total-messages', async (req: express.Request, res: express.Response) => {
+  const totalMessages = await getAvailableMessagesCount()
+  res.status(200).send(`Total messages available: ${totalMessages}`);
+})
 
 app.listen(80, () => {
   console.log('Server listening on port 80');
