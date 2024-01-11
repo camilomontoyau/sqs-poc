@@ -26,10 +26,31 @@ module "eks" {
       "arn:aws:iam::aws:policy/AmazonS3ReadOnlyAccess",
       "arn:aws:iam::aws:policy/SecretsManagerReadWrite",
       "arn:aws:iam::aws:policy/service-role/AmazonEBSCSIDriverPolicy",
-      "arn:aws:iam::aws:policy/sqs/SQSSendMessage",
-      "arn:aws:iam::aws:policy/sqs/SQSReceiveMessage",
-      "arn:aws:iam::aws:policy/sqs/SQSSendMessageBatch",
-      "arn:aws:iam::aws:policy/sqs/SQSGetQueueAttributes"
+      {
+          "Version": "2012-10-17",
+          "Statement": [
+              {
+                  "Effect": "Allow",
+                  "Action": "sqs:GetQueueAttributes",
+                  "Resource": "${aws_sqs_queue.my_queue.arn}"
+              },
+              {
+                  "Effect": "Allow",
+                  "Action": "sqs:SendMessage",
+                  "Resource": "${aws_sqs_queue.my_queue.arn}"
+              },
+              {
+                  "Effect": "Allow",
+                  "Action": "sqs:SendMessageBatch",
+                  "Resource": "${aws_sqs_queue.my_queue.arn}"
+              },
+              {
+                  "Effect": "Allow",
+                  "Action": "sqs:ReceiveMessage",
+                  "Resource": "${aws_sqs_queue.my_queue.arn}"
+              }
+          ]
+      }
     ]
     availability_zone = var.region
   }
