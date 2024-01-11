@@ -1,0 +1,24 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: {{ .Values.api_name }}-worker
+spec:
+  schedule: "*/1 * * * *" # every minute
+  concurrencyPolicy: Forbid
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          restartPolicy: OnFailure  
+          containers:
+          - name: {{ .Values.api_name }}-worker
+            image: {{ .Values.aws_account_id }}.dkr.ecr.{{ .Values.region }}.amazonaws.com/{{ .Values.api_name }}-worker:{{ .Values.api_image_version }}
+            imagePullPolicy: IfNotPresent
+            securityContext:
+              allowPrivilegeEscalation: false
+            env:
+              - name: SQS_URL
+                value: {{ .Values.sqs_url }}
+              - name: AWS_SQS_REGION
+                value: {{ .Values.region }}
+          
