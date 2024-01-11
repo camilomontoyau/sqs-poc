@@ -1,4 +1,4 @@
-import { SQSClient, SendMessageCommand, ReceiveMessageCommand } from "@aws-sdk/client-sqs"
+import { SQSClient, SendMessageCommand, ReceiveMessageCommand, GetQueueAttributesCommand } from "@aws-sdk/client-sqs"
 import { config } from './config'
 
 
@@ -38,6 +38,24 @@ export async function readMessagesFromSQS(): Promise<string[]> {
     return messageBodies
   } catch (error) {
     console.error('Error reading messages:', error)
+    throw error
+  }
+}
+
+export async function getAvailableMessagesCount(): Promise<number> {
+  const params = {
+    QueueUrl: config.SQS_ARN,
+    AttributeNames: ['ApproximateNumberOfMessages']
+  }
+
+  try {
+    const command = new GetQueueAttributesCommand(params)
+    const response = await sqs.send(command)
+    const attributes = response.Attributes || {}
+    const numberOfMessages = parseInt(attributes.ApproximateNumberOfMessages || '0')
+    return numberOfMessages
+  } catch (error) {
+    console.error('Error getting available messages count:', error)
     throw error
   }
 }
