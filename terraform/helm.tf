@@ -133,10 +133,10 @@ resource "helm_release" "cluster_issuer" {
 
 
 ### API Gateway
-resource "helm_release" "api_gateway" {
-  name = "api-gateway"
+resource "helm_release" "api" {
+  name = "api"
 
-  chart      = "./api-gateway/helm"
+  chart      = "../helm"
 
   namespace  = "default"
   version    = "1.4.4"
