@@ -9,7 +9,8 @@
     "process-messages": "ts-node src/process-messages.ts"
   },
   "dependencies": {
-    "express": "^4.17.1"  
+    "@aws-sdk/client-sqs": "^3.489.0",
+    "express": "^4.17.1"
   },
   "devDependencies": {
     "@types/express": "^4.17.9",
