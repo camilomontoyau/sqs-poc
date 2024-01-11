@@ -185,33 +185,3 @@ resource "helm_release" "api" {
 
   depends_on = [ module.eks, helm_release.cert_manager, helm_release.external_dns, helm_release.nginx, helm_release.cluster_issuer ]
 }
-
-
-### DONT USE THIS
-# resource "helm_release" "persistent_volume_fenix" {
-#   name = var.pv_name
-
-#   chart      = "./persistent-volumes/helm"
-
-#   namespace  = "default"
-#   set {
-#     name  = "pv.fenix.volume_id"
-#     value = "${var.ebs_volume_id}"
-#   }
-
-#   depends_on = [ helm_release.api_gateway ]
-# }
-
-# resource "helm_release" "prometheus" {
-#   name       = "prometheus"
-#   repository = "prometheus-community"
-#   chart      = "prometheus"
-#   version    = "14.11.1"
-
-#   # set {
-#   #   name  = "server.service.type"
-#   #   value = "LoadBalancer"
-#   # }
-
-#   depends_on = [ helm_release.persistent_volume_fenix ]
-# }
