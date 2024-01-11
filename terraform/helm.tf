@@ -96,40 +96,40 @@ resource "helm_release" "external_dns" {
 
 
 ### Cluster Issuer
-# resource "helm_release" "cluster_issuer" {
-#   name = "letsencrypt"
-#   repository = "https://charts.helm.sh/stable"
-#   chart      = "cert-manager"
-#   namespace  = "default"
-#   version    = "0.1.0"
+resource "helm_release" "cluster_issuer" {
+  name = "letsencrypt"
+  repository = "https://charts.helm.sh/stable"
+  chart      = "cert-manager"
+  namespace  = "default"
+  version    = "0.1.0"
 
-#   set {
-#     name  = "clusterIssuer.metadata.name"
-#     value = "letsencrypt-${var.Environment}"
-#   }
+  set {
+    name  = "clusterIssuer.metadata.name"
+    value = "letsencrypt-${var.Environment}"
+  }
 
-#   set {
-#     name  = "clusterIssuer.spec.acme.privateKeySecretRef.name"
-#     value = "letsencrypt-${var.Environment}"
-#   }
+  set {
+    name  = "clusterIssuer.spec.acme.privateKeySecretRef.name"
+    value = "letsencrypt-${var.Environment}"
+  }
 
-#   set {
-#     name  = "clusterIssuer.spec.acme.solvers[0].dns01.route53.hostedZoneID"
-#     value = var.hostedZoneID
-#   }
+  set {
+    name  = "clusterIssuer.spec.acme.solvers[0].dns01.route53.hostedZoneID"
+    value = var.hostedZoneID
+  }
 
-#   set {
-#     name  = "clusterIssuer.spec.acme.solvers[0].dns01.route53.region"
-#     value = var.region
-#   }
+  set {
+    name  = "clusterIssuer.spec.acme.solvers[0].dns01.route53.region"
+    value = var.region
+  }
 
-#   set {
-#     name  = "clusterIssuer.spec.acme.solvers[0].selector.dnsZones[0]"
-#     value = "${var.domain}.${var.tld}"
-#   }
+  set {
+    name  = "clusterIssuer.spec.acme.solvers[0].selector.dnsZones[0]"
+    value = "${var.domain}.${var.tld}"
+  }
   
-#   depends_on = [ module.eks, helm_release.cert_manager, helm_release.external_dns, helm_release.nginx ]
-# }
+  depends_on = [ module.eks, helm_release.cert_manager, helm_release.external_dns ]
+}
 
 # data "aws_caller_identity" "current" {}
 
