@@ -5,6 +5,7 @@
 # Check if Docker is running
 if ! docker info &> /dev/null; then
   echo "Docker is not running."
+  say "Docker is not running."
   exit 1
 fi
 
