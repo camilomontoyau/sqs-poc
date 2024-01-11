@@ -1,0 +1,21 @@
+apiVersion: cert-manager.io/v1
+kind: ClusterIssuer
+metadata:
+  name: {{ .Release.Name }}-{{ .Values.environment }}
+spec:
+  acme:
+    server: https://acme-v02.api.letsencrypt.org/directory
+    email: {{ .Values.email }}
+    privateKeySecretRef:
+      name: {{ .Release.Name }}-{{ .Values.environment }}
+    solvers:
+    - dns01:
+        route53:
+          hostedZoneID: {{ .Values.hostedZoneID }}
+          region: {{ .Values.region }}
+      selector:
+        dnsZones:
+        - {{ .Values.dns_domain }}  #"himedweb.com"
+    - http01:
+        ingress:
+          class: nginx
