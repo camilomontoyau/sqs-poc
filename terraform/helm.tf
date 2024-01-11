@@ -131,6 +131,8 @@ resource "helm_release" "cluster_issuer" {
   depends_on = [ module.eks, helm_release.cert_manager, helm_release.external_dns, helm_release.nginx ]
 }
 
+data "aws_caller_identity" "current" {}
+
 
 ### API Gateway
 resource "helm_release" "api" {
