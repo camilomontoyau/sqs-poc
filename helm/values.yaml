@@ -1,6 +1,6 @@
 aws_account_id: ""
 api_image_version: ""
-sqs_arn: ""
+sqs_url: ""
 api_name: ""
 domain: ""
 tld: ""

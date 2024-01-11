@@ -155,8 +155,8 @@ resource "helm_release" "api" {
   }
 
   set {
-    name = "sqs_arn"
-    value = aws_sqs_queue.my_queue.arn
+    name = "sqs_url"
+    value = aws_sqs_queue.my_queue.url
   }
 
   set {

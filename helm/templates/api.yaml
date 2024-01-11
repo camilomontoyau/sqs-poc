@@ -19,8 +19,8 @@ spec:
           ports:
             - containerPort: 80          
           env:
-            - name: SQS_ARN
-              value: {{ .Values.sqs_arn }}
+            - name: SQS_URL
+              value: {{ .Values.sqs_url }}
             - name: AWS_SQS_REGION
               value: {{ .Values.region }}
 ---
