@@ -1,4 +1,5 @@
 import express from 'express';
+import { sendMessageToSQS } from './sqs-service';
 
 
 const app = express();
@@ -7,11 +8,10 @@ const app = express();
 app.use(express.json());
 
 // Routes
-
-
-
-// Routes
-app.post('/message', (req: express.Request, res: express.Response) => {
+app.post('/message', async (req: express.Request, res: express.Response) => {
+  const message = req.body.message
+  const responseFromSQS = await sendMessageToSQS(message)
+  console.log(responseFromSQS)
   res.status(200).send('Message received!');
 });
 
