@@ -25,7 +25,12 @@ module "eks" {
     iam_role_additional_policies = [
       "arn:aws:iam::aws:policy/AmazonS3ReadOnlyAccess",
       "arn:aws:iam::aws:policy/SecretsManagerReadWrite",
-      "arn:aws:iam::aws:policy/service-role/AmazonEBSCSIDriverPolicy"
+      "arn:aws:iam::aws:policy/service-role/AmazonEBSCSIDriverPolicy",
+      "arn:aws:iam::aws:policy/sqs/SQSSendMessage",
+      "arn:aws:iam::aws:policy/sqs/SQSReceiveMessage",
+      "arn:aws:iam::aws:policy/sqs/SQSSendMessageBatch",
+      "arn:aws:iam::aws:policy/sqs/SQSGetQueueAttributes"
+
     ]
     availability_zone = var.region
   }
@@ -51,6 +56,6 @@ module "eks" {
       ipv6_cidr_blocks = ["::/0"]
     }
   }
-
+  
   tags = var.tags
 }
