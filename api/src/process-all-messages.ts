@@ -5,22 +5,15 @@ const sqsClient = new SQSClient({ region: config.AWS_SQS_REGION })
 
 const queueUrl: string = config.SQS_URL
 
-const getQueueAttributesCommand = new GetQueueAttributesCommand({
-  QueueUrl: queueUrl,
-  AttributeNames: ["ApproximateNumberOfMessages"],
-})
-
-const receiveMessageCommand = new ReceiveMessageCommand({
-  QueueUrl: queueUrl,
-  MaxNumberOfMessages: config.SQS_MESSAGE_NUMBER as number,
-});
-
 const countMessages = async () => {
+  const getQueueAttributesCommand = new GetQueueAttributesCommand({
+    QueueUrl: queueUrl,
+    AttributeNames: ["ApproximateNumberOfMessages"],
+  })
   const { Attributes } = await sqsClient.send(getQueueAttributesCommand)
   const totalAvailableMessages = parseInt(Attributes?.ApproximateNumberOfMessages ?? '0')
   return totalAvailableMessages
 }
-
 
 async function processAllMessages() {
   let totalAvailableMessages = await countMessages()
@@ -33,6 +26,10 @@ async function processAllMessages() {
   }
 
   while (totalAvailableMessages > 0) {
+    const receiveMessageCommand = new ReceiveMessageCommand({
+      QueueUrl: queueUrl,
+      MaxNumberOfMessages: config.SQS_MESSAGE_NUMBER as number,
+    });
     const { Messages } = await sqsClient.send(receiveMessageCommand);
     if (Messages && Messages.length > 0) {
       for (const message of Messages) {
