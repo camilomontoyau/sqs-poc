@@ -6,7 +6,8 @@
   "scripts": {
     "start": "npm i && ts-node src/app.ts",
     "build": "tsc",
-    "process-messages": "ts-node src/process-messages.ts"
+    "process-messages": "ts-node src/process-messages.ts",
+    "process-all-messages": "ts-node src/process-all-messages.ts"
   },
   "dependencies": {
     "@aws-sdk/client-sqs": "^3.489.0",
