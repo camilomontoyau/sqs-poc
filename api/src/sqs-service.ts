@@ -8,7 +8,7 @@ export async function sendMessageToSQS(
   message: string
 ): Promise<void> {
   const params = {
-    MessageBody: message,
+    MessageBody: JSON.stringify(message),
     QueueUrl: config.SQS_URL
   }
 
