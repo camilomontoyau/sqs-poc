@@ -132,7 +132,7 @@ data "aws_caller_identity" "current" {}
 
 ### API
 resource "helm_release" "api" {
-  name = "api"
+  name = var.api_name
 
   chart      = "../helm"
 
