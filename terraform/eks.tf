@@ -1,5 +1,5 @@
 module "eks" {
-  depends_on = [ aws_iam_policy.custom_sqs_policy ]
+  depends_on = [ aws_sqs_queue.my_queue, aws_iam_policy.custom_sqs_policy ]
   source = "terraform-aws-modules/eks/aws"
   version = "~> 18.0"
 
@@ -24,9 +24,9 @@ module "eks" {
     instance_types = [var.instance_type]
     tags           = var.tags
     iam_role_additional_policies = [
-      "arn:aws:iam::aws:policy/AmazonS3ReadOnlyAccess",
-      "arn:aws:iam::aws:policy/SecretsManagerReadWrite",
-      "arn:aws:iam::aws:policy/service-role/AmazonEBSCSIDriverPolicy",
+      # "arn:aws:iam::aws:policy/AmazonS3ReadOnlyAccess",
+      # "arn:aws:iam::aws:policy/SecretsManagerReadWrite",
+      # "arn:aws:iam::aws:policy/service-role/AmazonEBSCSIDriverPolicy"
       aws_iam_policy.custom_sqs_policy.arn
     ]
     availability_zone = var.region
