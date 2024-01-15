@@ -15,10 +15,15 @@ const receiveMessageCommand = new ReceiveMessageCommand({
   MaxNumberOfMessages: config.SQS_MESSAGE_NUMBER as number,
 });
 
-
-async function processAllMessages() {
+const countMessages = async () => {
   const { Attributes } = await sqsClient.send(getQueueAttributesCommand)
   const totalAvailableMessages = parseInt(Attributes?.ApproximateNumberOfMessages ?? '0')
+  return totalAvailableMessages
+}
+
+
+async function processAllMessages() {
+  let totalAvailableMessages = await countMessages()
 
   console.log(`Total available messages: ${totalAvailableMessages}`)
 
@@ -41,6 +46,7 @@ async function processAllMessages() {
         await sqsClient.send(deleteMessageCommand);
       }
     }
+    totalAvailableMessages = await countMessages()
   }
   
 }
