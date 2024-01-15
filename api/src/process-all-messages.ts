@@ -14,7 +14,7 @@ const getQueueAttributesCommand = new GetQueueAttributesCommand({
 
 const receiveMessageCommand = new ReceiveMessageCommand({
   QueueUrl: queueUrl,
-  MaxNumberOfMessages: batchSize,
+  MaxNumberOfMessages: config.SQS_MESSAGE_NUMBER,
 });
 
 
@@ -22,12 +22,13 @@ async function processAllMessages() {
   const { Attributes } = await sqsClient.send(getQueueAttributesCommand)
   const totalAvailableMessages = parseInt(Attributes?.ApproximateNumberOfMessages ?? '0')
 
+  console.log(`Total available messages: ${totalAvailableMessages}`)
+
   if (!totalAvailableMessages) {
     console.log("No messages to process")
     return
   }
 
-  console.log(`Total available messages: ${totalAvailableMessages}`)
   while (totalAvailableMessages > 0) {
     const { Messages } = await sqsClient.send(receiveMessageCommand);
     if (Messages && Messages.length > 0) {
