@@ -8,6 +8,7 @@ resource "aws_sqs_queue" "my_queue" {
 }
 
 resource "aws_iam_policy" "custom_sqs_policy" {
+  depends_on = [ aws_sqs_queue.my_queue ]
   name        = "sqs"
   description = "A custom SQS policy"
   policy      = <<EOF
