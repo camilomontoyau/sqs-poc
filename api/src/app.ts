@@ -1,5 +1,5 @@
 import express from 'express';
-import { getAvailableMessagesCount, sendMessageToSQS } from './sqs-service';
+import { getAvailableMessagesCount, sendMessageBatchToSQS, sendMessageToSQS } from './sqs-service';
 
 
 const app = express();
@@ -14,6 +14,13 @@ app.post('/message', async (req: express.Request, res: express.Response) => {
   console.log(responseFromSQS)
   res.status(200).send('Message received!');
 });
+
+app.post('/message-batch', async (req: express.Request, res: express.Response) => {
+  const messages = req.body.messages
+  const responseFromSQS = await sendMessageBatchToSQS(messages)
+  console.log(responseFromSQS)
+  res.status(200).send('Messages received!');
+})
 
 app.get('/health', (req, res) => res.status(200).send('OK'))
 

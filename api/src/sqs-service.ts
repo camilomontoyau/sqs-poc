@@ -1,4 +1,4 @@
-import { SQSClient, SendMessageCommand, ReceiveMessageCommand, GetQueueAttributesCommand } from "@aws-sdk/client-sqs"
+import { SQSClient, SendMessageCommand, ReceiveMessageCommand, GetQueueAttributesCommand, SendMessageBatchCommand } from "@aws-sdk/client-sqs"
 import { config } from './config'
 
 
@@ -56,6 +56,31 @@ export async function getAvailableMessagesCount(): Promise<number> {
     return numberOfMessages
   } catch (error) {
     console.error('Error getting available messages count:', error)
+    throw error
+  }
+}
+
+export async function sendMessageBatchToSQS(
+  messages: string[]
+): Promise<void> {
+  const entries = messages.map((message, index) => {
+    return {
+      Id: `${index}`,
+      MessageBody: JSON.stringify(message)
+    }
+  })
+
+  const params = {
+    Entries: entries,
+    QueueUrl: config.SQS_URL
+  }
+
+  try {
+    const command = new SendMessageBatchCommand(params)
+    await sqs.send(command)
+    console.log('Messages sent successfully')
+  } catch (error) {
+    console.error('Error sending messages:', error)
     throw error
   }
 }
