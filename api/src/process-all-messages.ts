@@ -1,11 +1,9 @@
-import { SQSClient, SendMessageCommand, ReceiveMessageCommand, GetQueueAttributesCommand, DeleteMessageCommand } from "@aws-sdk/client-sqs"
+import { SQSClient, ReceiveMessageCommand, GetQueueAttributesCommand, DeleteMessageCommand } from "@aws-sdk/client-sqs"
 import { config } from './config'
 
 const sqsClient = new SQSClient({ region: config.AWS_SQS_REGION })
 
 const queueUrl: string = config.SQS_URL
-
-const batchSize = 100
 
 const getQueueAttributesCommand = new GetQueueAttributesCommand({
   QueueUrl: queueUrl,
@@ -14,7 +12,7 @@ const getQueueAttributesCommand = new GetQueueAttributesCommand({
 
 const receiveMessageCommand = new ReceiveMessageCommand({
   QueueUrl: queueUrl,
-  MaxNumberOfMessages: config.SQS_MESSAGE_NUMBER,
+  MaxNumberOfMessages: config.SQS_MESSAGE_NUMBER as number,
 });
 
 
