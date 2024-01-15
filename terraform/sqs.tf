@@ -33,6 +33,16 @@ resource "aws_iam_policy" "custom_sqs_policy" {
           "Effect": "Allow",
           "Action": "sqs:ReceiveMessage",
           "Resource": "${aws_sqs_queue.my_queue.arn}"
+      },
+      {
+          "Effect": "Allow",
+          "Action": "sqs:DeleteMessage",
+          "Resource": "${aws_sqs_queue.my_queue.arn}"
+      },
+      {
+          "Effect": "Allow",
+          "Action": "sqs:DeleteMessageBatch",
+          "Resource": "${aws_sqs_queue.my_queue.arn}"
       }
   ]
 }
