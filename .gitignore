@@ -62,3 +62,4 @@ terraform/.terraform.lock.hcl
 terraform/.terraform.tfstate.lock.info
 terraform/dev.tfvars
 make-request.js
+make-batch-request.js
